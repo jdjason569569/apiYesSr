@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TasksModule } from './tasks/tasks.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -14,7 +15,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     synchronize: false,
     retryDelay: 3000,
     retryAttempts: 10
-  }),TasksModule],
+  }),TasksModule, UserModule],
   controllers: [],
   providers: [],
 })

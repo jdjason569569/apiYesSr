@@ -4,9 +4,7 @@ import { TasksService } from '../services/tasks.service';
 @Controller('api/tasks')
 export class TasksController {
 
-    constructor(private taskService: TasksService){
-
-    }
+    constructor(private taskService: TasksService){}
 
 
     @Get()
