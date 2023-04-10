@@ -12,13 +12,11 @@ export class UserService {
        return this.userRepo.find();
     }
 
-    findOne(id: any){
-        return this.userRepo.findOne(id);
+    findUser(id: string){
+        return this.userRepo.findOne({ where: { id_firebase: id } });
     }
 
     create(body: users){
-        console.log("body ->> ",body);
-        
         const newUser = this.userRepo.create(body);
         return this.userRepo.save(newUser);
     }

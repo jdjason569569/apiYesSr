@@ -16,10 +16,11 @@ export class TasksService {
         return this.taskRepo.findOne(id);
     }
 
-    create(body: any){
+    create(body: Task){
         const newTask = this.taskRepo.create(body);
         return this.taskRepo.save(newTask);
     }
+    
 
     async update(id: any, body:any){
         const task = await this.taskRepo.findOne(id);
