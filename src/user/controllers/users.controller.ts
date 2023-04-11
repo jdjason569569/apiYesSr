@@ -12,7 +12,7 @@ export class UsersController {
 
 
     @Get(':id')
-    getOne(@Param('id') id: string) {
+    getOne(@Param('id') id: string): Promise<users> {
         //example postman @Param    -> http://localhost:3000/api/productos/123
         //example postman @Query    -> http://localhost:3001/api/user?id=1 
         return this.userService.findUser(id);

@@ -13,7 +13,7 @@ export class TasksController {
     }
 
     @Get(':id')
-    getOne(@Param('id') id: string){
+    getOne(@Param('id', ParseIntPipe) id: number){
         return this.taskService.findOne(id);
     }
 

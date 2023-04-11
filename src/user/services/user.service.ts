@@ -12,8 +12,8 @@ export class UserService {
        return this.userRepo.find();
     }
 
-    findUser(id: string){
-        return this.userRepo.findOne({ where: { id_firebase: id } });
+    findUser(id: string): Promise<users>{
+        return this.userRepo.findOne({ where: { id_firebase: id }});
     }
 
     create(body: users){

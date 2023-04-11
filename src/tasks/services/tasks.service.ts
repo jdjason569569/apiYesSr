@@ -12,11 +12,15 @@ export class TasksService {
        return this.taskRepo.find();
     }
 
-    findOne(id: any){
-        return this.taskRepo.findOne(id);
+    async findOne(id: number){
+        
+        const a = await this.taskRepo.find({ where: { id_users: id }});
+        console.log(a);
+        return a;
     }
 
     create(body: Task){
+        body.date_register = new Date();
         const newTask = this.taskRepo.create(body);
         return this.taskRepo.save(newTask);
     }
