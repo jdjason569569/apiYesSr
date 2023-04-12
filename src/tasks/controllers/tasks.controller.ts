@@ -14,7 +14,7 @@ export class TasksController {
 
     @Get(':id')
     getOne(@Param('id', ParseIntPipe) id: number){
-        return this.taskService.findOne(id);
+        return this.taskService.findTaskByUser(id);
     }
 
     @Post()

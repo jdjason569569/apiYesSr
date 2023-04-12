@@ -12,11 +12,12 @@ export class TasksService {
        return this.taskRepo.find();
     }
 
-    async findOne(id: number){
-        
-        const a = await this.taskRepo.find({ where: { id_users: id }});
-        console.log(a);
-        return a;
+     async findTaskById(id: number){
+        return await this.taskRepo.find({ where: { id_task: id }});
+    }
+
+     findTaskByUser(id: number){
+        return this.taskRepo.find({ where: { id_users: id }});
     }
 
     create(body: Task){
@@ -27,7 +28,7 @@ export class TasksService {
     
 
     async update(id: any, body:any){
-        const task = await this.taskRepo.findOne(id);
+        const [task] = await this.findTaskById(id);
         this.taskRepo.merge(task, body);
         return this.taskRepo.save(task);
     }
