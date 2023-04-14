@@ -31,9 +31,4 @@ export class UserService {
         await this.userRepo.delete(id);
         return true;
     }
-
-
-
-
-
 }
