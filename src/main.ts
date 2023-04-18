@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
 
-    origin:"https://si-senor.netlify.app/",
+    origin:"https://si-senor.netlify.app",
     
     });
   await app.listen(process.env.PORT  || 3001);
