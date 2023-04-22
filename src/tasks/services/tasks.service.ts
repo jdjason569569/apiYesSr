@@ -17,7 +17,7 @@ export class TasksService {
     }
 
      findTaskByUser(id: number){
-        return this.taskRepo.find({ where: { id_users: id }});
+        return this.taskRepo.find({ where: { id_users: id }, order: { id_task: 'ASC' },});
     }
 
     create(body: Task){
