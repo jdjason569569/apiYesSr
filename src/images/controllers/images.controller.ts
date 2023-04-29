@@ -5,13 +5,18 @@ import { ImageService } from '../services/image.service';
 @Controller('api/images')
 export class ImageController {
 
-    constructor(private imageService: ImageService){}
+    constructor(private imageService: ImageService) { }
 
 
     @Get()
-    getAll(){
+    getAll() {
         return this.imageService.findAll();
     }
 
-   
+    @Post()
+    create(@Body() body: any) {
+        return this.imageService.create(body);
+    }
+
+
 }

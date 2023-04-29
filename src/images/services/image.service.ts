@@ -13,4 +13,10 @@ export class ImageService {
        return this.imagesRepo.find();
     }
 
+    create(body: Images){
+        body.date_register = new Date();
+        const newImage = this.imagesRepo.create(body);
+        return this.imagesRepo.save(newImage);
+    }
+
 }
