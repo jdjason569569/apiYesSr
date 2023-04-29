@@ -18,5 +18,10 @@ export class ImageController {
         return this.imageService.create(body);
     }
 
+    @Get(':id')
+    getOne(@Param('id', ParseIntPipe) id: number){
+        return this.imageService.findTaskByUser(id);
+    }
+
 
 }

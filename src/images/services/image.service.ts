@@ -19,4 +19,9 @@ export class ImageService {
         return this.imagesRepo.save(newImage);
     }
 
+    findTaskByUser(id: number){
+        return this.imagesRepo.find({ where: { id_users: id }, order: { id_images: 'ASC' },});
+    }
+
+
 }
