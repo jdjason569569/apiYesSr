@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TasksModule } from './tasks/tasks.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
+import { ImageModule } from './images/image.module';
 require('dotenv').config()
 
 @Module({
@@ -17,7 +18,7 @@ require('dotenv').config()
     synchronize: false,
     retryDelay: 3000,
     retryAttempts: 10
-  }),TasksModule, UserModule],
+  }),TasksModule, UserModule, ImageModule],
   controllers: [],
   providers: [],
 })
