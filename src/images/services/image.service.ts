@@ -23,5 +23,9 @@ export class ImageService {
         return this.imagesRepo.find({ where: { id_users: id }, order: { id_images: 'ASC' },});
     }
 
+    findTaskById(idImage: number){
+        return this.imagesRepo.find({ where: { id_images: idImage }});
+    }
+
 
 }

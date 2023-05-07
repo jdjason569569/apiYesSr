@@ -7,7 +7,6 @@ export class ImageController {
 
     constructor(private imageService: ImageService) { }
 
-
     @Get()
     getAll() {
         return this.imageService.findAll();
@@ -19,8 +18,13 @@ export class ImageController {
     }
 
     @Get(':id')
-    getOne(@Param('id', ParseIntPipe) id: number){
+    findTaskByUser(@Param('id', ParseIntPipe) id: number){
         return this.imageService.findTaskByUser(id);
+    }
+
+    @Get('detail/:idImage')
+    findTaskById(@Param('idImage', ParseIntPipe) idImage: number){
+        return this.imageService.findTaskById(idImage);
     }
 
 
