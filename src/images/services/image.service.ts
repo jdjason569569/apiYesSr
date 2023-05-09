@@ -27,5 +27,10 @@ export class ImageService {
         return this.imagesRepo.find({ where: { id_images: idImage }});
     }
 
+    async delete(id: number){
+        await this.imagesRepo.delete(id);
+        return true;
+    }
+
 
 }
