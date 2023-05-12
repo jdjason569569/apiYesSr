@@ -3,11 +3,13 @@ import { TasksModule } from './tasks/tasks.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { ImageModule } from './images/image.module';
+import { NotificationService } from './utilityServices/notification.service';
+import { Task } from './tasks/entities/task.entity';
+import { ScheduleModule } from '@nestjs/schedule';
 require('dotenv').config()
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
-    
+  imports: [ScheduleModule.forRoot(),TypeOrmModule.forRoot({
     type: 'postgres',
     host: process.env.DB_HOST,
     port: parseInt(process.env.DB_PORT || '5432') ,
@@ -18,8 +20,8 @@ require('dotenv').config()
     synchronize: false,
     retryDelay: 3000,
     retryAttempts: 10
-  }),TasksModule, UserModule, ImageModule],
+  }),TasksModule, UserModule, ImageModule,TypeOrmModule.forFeature([Task])  ],
   controllers: [],
-  providers: [],
+  providers: [NotificationService],
 })
 export class AppModule {}
