@@ -15,6 +15,9 @@ export class Task {
   date_register: Date;
 
   @Column()
+  expiration_date: Date;
+
+  @Column()
   id_users: number;
 
 }

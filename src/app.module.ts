@@ -6,6 +6,7 @@ import { ImageModule } from './images/image.module';
 import { NotificationService } from './utilityServices/notification.service';
 import { Task } from './tasks/entities/task.entity';
 import { ScheduleModule } from '@nestjs/schedule';
+import { MailerModule } from '@nestjs-modules/mailer';
 require('dotenv').config()
 
 @Module({
@@ -20,7 +21,25 @@ require('dotenv').config()
     synchronize: false,
     retryDelay: 3000,
     retryAttempts: 10
-  }),TasksModule, UserModule, ImageModule,TypeOrmModule.forFeature([Task])  ],
+  }),TasksModule, UserModule, ImageModule,TypeOrmModule.forFeature([Task]),
+  MailerModule.forRoot({
+    transport: {
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: false, 
+      auth: {
+        user: 'jdjason569develop@gmail.com', // Aquí debes ingresar tu dirección de correo electrónico
+        pass: 'Holamundo569.', // Aquí debes ingresar tu contraseña de correo electrónico
+      },
+      tls: {
+        ciphers: 'SSLv3',
+      },
+      socketTimeout: 90000, // aumentar el tiempo de espera a 60 segundos
+    },
+    defaults: {
+      from: '"No Reply" <jdjason569develop@gmail.com>', // Aquí debes ingresar la dirección de correo electrónico desde la que quieres enviar los correos electrónicos
+    },
+  })  ],
   controllers: [],
   providers: [NotificationService],
 })

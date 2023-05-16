@@ -22,6 +22,8 @@ export class TasksService {
 
     create(body: Task){
         body.date_register = new Date();
+        body.expiration_date =  new Date(body.date_register);
+        body.expiration_date.setMonth(body.date_register.getMonth() + 1); 
         const newTask = this.taskRepo.create(body);
         return this.taskRepo.save(newTask);
     }
