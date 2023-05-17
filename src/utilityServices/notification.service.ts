@@ -5,36 +5,44 @@ import { Task } from 'src/tasks/entities/task.entity';
 import { Repository } from 'typeorm';
 import { Cron } from '@nestjs/schedule';
 import { MailerService } from '@nestjs-modules/mailer';
+import { users } from 'src/user/entities/users.entity';
 
 @Injectable()
 export class NotificationService {
 
     constructor(@InjectRepository(Task) private taskRepo: Repository<Task>, private readonly mailerService: MailerService) {
       this.manageNotifications();
+      
     }
 
     @Cron('0 * * * * *') // Ejecutar cada minuto en punto
     handleCron() {
-   // this.manageNotifications();
+    //this.manageNotifications();
   }
 
       private async manageNotifications(){
-        // const tasks = await this.taskRepo.find();
-        // const currentDay = new Date('2023-06-14'); 
-          
-        //   const tasksNotify = tasks.filter(task =>{
-        //     const days = task.expiration_date.getTime() - currentDay.getTime();
-        //     const missingDays = Math.floor(days / (1000 * 60 * 60 * 24));
-        //     console.log('missingDays ->',missingDays);
-        //     return missingDays <= 1;
-        //   });
-        const a = await this.sendEmail();
-          
+        const taskAndUser = await this.taskRepo.createQueryBuilder('Task')
+        .innerJoinAndSelect(users, 'users', 'users.id_users = Task.id_users')
+        .getMany();
+ 
+            const currentDay = new Date('2023-06-16');   
+            const tasksNotify = taskAndUser.filter(task =>{
+              const days = task.expiration_date.getTime() - currentDay.getTime();
+              const missingDays = Math.floor(days / (1000 * 60 * 60 * 24));
+              return missingDays <= 1;
+            });
+            console.log(tasksNotify); 
+           
+        //this.sendEmail(tasksNotify);
+        
+        
+         
      }
 
-     async sendEmail(): Promise<void> {
-      return await this.mailerService.sendMail({
-        to: 'jdjason569@gmail.com',
+     sendEmail(tasksNotify): void {
+       this.mailerService.sendMail({
+        to: 'jdjason569develop@gmail.com',
+        from: 'jdjason569develop@gmail.com',
         subject: 'Prueba de correo electrónico',
         text: 'holamundo',
       });

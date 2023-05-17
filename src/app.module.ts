@@ -7,6 +7,7 @@ import { NotificationService } from './utilityServices/notification.service';
 import { Task } from './tasks/entities/task.entity';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { TasksService } from './tasks/services/tasks.service';
 require('dotenv').config()
 
 @Module({
@@ -26,21 +27,21 @@ require('dotenv').config()
     transport: {
       host: 'smtp.gmail.com',
       port: 465,
-      secure: false, 
+      secure: true, 
       auth: {
         user: 'jdjason569develop@gmail.com', // Aquí debes ingresar tu dirección de correo electrónico
-        pass: 'Holamundo569.', // Aquí debes ingresar tu contraseña de correo electrónico
+        pass: 'cgfegbihhdrcebtw', // Aquí debes ingresar tu contraseña de correo electrónico
       },
       tls: {
         ciphers: 'SSLv3',
       },
       socketTimeout: 90000, // aumentar el tiempo de espera a 60 segundos
     },
-    defaults: {
+    defaults: { 
       from: '"No Reply" <jdjason569develop@gmail.com>', // Aquí debes ingresar la dirección de correo electrónico desde la que quieres enviar los correos electrónicos
     },
   })  ],
   controllers: [],
-  providers: [NotificationService],
+  providers: [NotificationService, TasksService], 
 })
 export class AppModule {}

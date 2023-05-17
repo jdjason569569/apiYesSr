@@ -2,15 +2,10 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@
 import { UserService } from '../services/user.service';
 import { users } from '../entities/users.entity';
 
-
-
-
 @Controller('api/user')
 export class UsersController {
-
     constructor(private userService: UserService) { }
-
-
+    
     @Get(':id')
     getOne(@Param('id') id: string): Promise<users> {
         //example postman @Param    -> http://localhost:3000/api/productos/123

@@ -11,4 +11,8 @@ export class users {
   @Column()
   id_firebase: string;
 
+  @Column()
+  email: string;
+  
+
 }

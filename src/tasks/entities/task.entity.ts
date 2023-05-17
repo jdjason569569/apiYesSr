@@ -19,5 +19,6 @@ export class Task {
 
   @Column()
   id_users: number;
+  
 
 }
