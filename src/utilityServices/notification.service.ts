@@ -10,41 +10,41 @@ import { users } from 'src/user/entities/users.entity';
 @Injectable()
 export class NotificationService {
 
-    constructor(@InjectRepository(Task) private taskRepo: Repository<Task>, private readonly mailerService: MailerService) {
-      this.manageNotifications();
-      
-    }
+    constructor(@InjectRepository(Task) private taskRepo: Repository<Task>, private readonly mailerService: MailerService) {}
 
-    @Cron('0 * * * * *') // Ejecutar cada minuto en punto
+    @Cron('0 0 0 * * *') // Ejecutar cada dia
     handleCron() {
-    //this.manageNotifications();
+    this.manageNotifications();
   }
 
       private async manageNotifications(){
-        const taskAndUser = await this.taskRepo.createQueryBuilder('Task')
-        .innerJoinAndSelect(users, 'users', 'users.id_users = Task.id_users')
-        .getMany();
+        const taskAndUser = await this.taskRepo.createQueryBuilder('task')
+        .innerJoinAndSelect(users, 'users', 'users.id_users = task.id_users')  
+        .where('task.completed = :value', { value: false }) 
+        .getRawMany(); 
  
-            const currentDay = new Date('2023-06-16');   
-            const tasksNotify = taskAndUser.filter(task =>{
-              const days = task.expiration_date.getTime() - currentDay.getTime();
-              const missingDays = Math.floor(days / (1000 * 60 * 60 * 24));
-              return missingDays <= 1;
-            });
-            console.log(tasksNotify); 
-           
-        //this.sendEmail(tasksNotify);
-        
-        
-         
+               const currentDay = new Date('2023-06-17');   
+               const tasksNotify = taskAndUser.filter(task =>{
+               const days = task.task_expiration_date.getTime() - currentDay.getTime();
+               const missingDays = Math.floor(days / (1000 * 60 * 60 * 24));
+               return missingDays <= 1; 
+             });
+             if(tasksNotify.length > 0){
+              this.sendEmail(tasksNotify);
+             }
      }
 
-     sendEmail(tasksNotify): void {
+     public sendEmail(tasksNotify): void {
+      console.log('Tarea de envio de emails ejecutada');
+      
+      const emails = tasksNotify.map(task => task.users_email);
+      const uniqueEmails = emails.filter((value, index) => emails.indexOf(value) !== index);
+      
        this.mailerService.sendMail({
-        to: 'jdjason569develop@gmail.com',
+        to: uniqueEmails.join(','),
         from: 'jdjason569develop@gmail.com',
-        subject: 'Prueba de correo electrónico',
-        text: 'holamundo',
+        subject: 'Si señor',
+        text: 'Si señor tienes tareas pendientes',
       });
     }
 
